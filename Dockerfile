@@ -1,9 +1,9 @@
-FROM node:10 AS ui-build
+FROM node:18 AS ui-build
 WORKDIR /usr/src/app
 COPY my-app/ ./my-app/
-RUN cd my-app && npm install && npm audit fix --force && npm run build 
+RUN cd my-app && npm install && npm run build  && npm audit fix --force
 
-FROM node:10 AS server-build
+FROM node:18 AS server-build
 WORKDIR /root/
 COPY --from=ui-build /usr/src/app/my-app/build ./my-app/build
 COPY api/package*.json ./api/
